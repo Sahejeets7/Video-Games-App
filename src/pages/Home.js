@@ -3,12 +3,12 @@ import GameDetail from "../components/GameDetail";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "../actions/gamesAction";
+import { useHistory, useLocation } from "react-router-dom";
 //Components
 import Game from "../components/Game";
 //Styling and Animation
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { useLocation } from "react-router-dom";
 import { fadeIn } from "../animations";
 
 const Home = () => {
@@ -16,6 +16,7 @@ const Home = () => {
   const location = useLocation();
   const pathId = location.pathname.split("/")[2];
 
+  const history = useHistory();
   //FETCH GAMES
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,8 +26,17 @@ const Home = () => {
   const { popular, newGames, upcoming, searched } = useSelector(
     (state) => state.games
   );
+
+  const closeDetailPopup = (e) => {
+    const element = e.target;
+    if(e.key === "Escape" && element.href.includes("/game/")) {
+      document.body.style.overflow = "auto";
+      history.push("/");
+    }
+  }
+
   return (
-    <GameList variants={fadeIn} initial="hidden" animate="show">
+    <GameList variants={fadeIn} initial="hidden" animate="show" onKeyDown={closeDetailPopup}>
       <AnimateSharedLayout type="crossfade">
         <AnimatePresence>
           {pathId && <GameDetail pathId={pathId} />}
