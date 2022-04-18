@@ -26,7 +26,6 @@ const Home = ({ enableLoader, disableLoader }) => {
   );  
 
   useEffect(() => {
-      console.log("firse");
       dispatch(loadGames());
       enableLoader()
     } ,[dispatch])
