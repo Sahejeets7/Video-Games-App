@@ -79,7 +79,6 @@ const GlobalStyles = createGlobalStyle`
             border-radius: 50%;
             content: "";
             height: 40px;
-            // position: absolute;
             position: fixed;
             top: 60%;
             left: 50%;
