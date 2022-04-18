@@ -8,7 +8,7 @@ import { fetchSearch } from "../actions/gamesAction";
 import { useDispatch } from "react-redux";
 import { fadeIn } from "../animations";
 
-const Nav = () => {
+const Nav = ({enableLoader, disableLoader}) => {
   const dispatch = useDispatch();
   const [textInput, setTextInput] = useState("");
 
@@ -19,6 +19,7 @@ const Nav = () => {
     e.preventDefault();
     dispatch(fetchSearch(textInput));
     setTextInput("");
+    enableLoader()
   };
   const clearSearched = () => {
     dispatch({ type: "CLEAR_SEARCHED" });

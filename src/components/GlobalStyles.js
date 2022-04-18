@@ -48,6 +48,46 @@ const GlobalStyles = createGlobalStyle`
         font-weight: bold;
     font-family: "Montserrat", sans-serif;
     }
+    .loader{
+        background: #ffffffb8;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top:0;
+        z-index: 9999;
+        width: 100%;
+        p {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: black;
+        }
+        @keyframes spinner {
+            0% {
+              transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
+            100% {
+              transform: translate3d(-50%, -50%, 0) rotate(360deg);
+            }
+          }
+        .spin::before{
+            animation: 1.5s linear infinite spinner;
+            animation-play-state: inherit;
+            border: solid 5px #cfd0d1;
+            border-bottom-color: #1c87c9;
+            border-radius: 50%;
+            content: "";
+            height: 40px;
+            // position: absolute;
+            position: fixed;
+            top: 60%;
+            left: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            width: 40px;
+            will-change: transform;
+        }
+    }
 `;
 
 export default GlobalStyles;

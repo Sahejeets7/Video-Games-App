@@ -11,7 +11,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { fadeIn } from "../animations";
 
-const Home = () => {
+const Home = ({ enableLoader, disableLoader }) => {
   //get the current location
   const location = useLocation();
   const pathId = location.pathname.split("/")[2];
@@ -19,14 +19,31 @@ const Home = () => {
   const history = useHistory();
   //FETCH GAMES
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadGames());
-  }, [dispatch]);
-  //Get that data back
+
+  // Grab State
   const { popular, newGames, upcoming, searched } = useSelector(
     (state) => state.games
-  );
+  );  
 
+  useEffect(() => {
+      console.log("firse");
+      dispatch(loadGames());
+      enableLoader()
+    } ,[dispatch])
+  
+  //make loader false
+  useEffect(() => {
+    if(popular.length > 0){
+      disableLoader()
+    }
+  }, [popular])
+  
+  useEffect(() => {
+    if(searched.length > 0){
+      disableLoader()
+    }
+  }, [searched])
+  
   const closeDetailPopup = (e) => {
     const element = e.target;
     if(e.key === "Escape" && element.href.includes("/game/")) {
@@ -46,11 +63,7 @@ const Home = () => {
             <h2>Searched Games</h2>
             <Games>
               {searched.map((game) => (
-                <Game
-                  name={game.name}
-                  released={game.released}
-                  id={game.id}
-                  image={game.background_image}
+                <Game name={game.name} released={game.released} id={game.id} image={game.background_image}
                   key={game.id}
                 />
               ))}
@@ -62,11 +75,7 @@ const Home = () => {
         <h2>Upcoming Games</h2>
         <Games>
           {upcoming.map((game) => (
-            <Game
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
+            <Game name={game.name} released={game.released} id={game.id} image={game.background_image}
               key={game.id}
             />
           ))}
@@ -74,11 +83,7 @@ const Home = () => {
         <h2>Popular Games</h2>
         <Games>
           {popular.map((game) => (
-            <Game
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
+            <Game name={game.name} released={game.released} id={game.id} image={game.background_image}
               key={game.id}
             />
           ))}
@@ -86,11 +91,7 @@ const Home = () => {
         <h2>New Games</h2>
         <Games>
           {newGames.map((game) => (
-            <Game
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
+            <Game name={game.name} released={game.released} id={game.id} image={game.background_image}
               key={game.id}
             />
           ))}
